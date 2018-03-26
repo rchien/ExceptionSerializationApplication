@@ -5,9 +5,8 @@ using Microsoft.ServiceFabric.Services.Remoting.FabricTransport;
 [assembly: FabricTransportServiceRemotingProvider(RemotingListener = RemotingListener.V2Listener, RemotingClient = RemotingClient.V2Client)]
 namespace Common
 {
-    public interface IStateless1 : IService
+    public interface IStatelessInCommon : IService
     {
-        Task HelloExceptions();
-        
+        Task HelloExceptionFromCommon();
     }
 }

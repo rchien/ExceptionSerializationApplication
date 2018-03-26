@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Stateless1\Stateless1.csproj" />
   </ItemGroup>
 
 </Project>

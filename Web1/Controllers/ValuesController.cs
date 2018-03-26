@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Stateless1;
 
 namespace Web1.Controllers
 {
@@ -17,15 +18,33 @@ namespace Web1.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [HttpGet("exceptions")]
-        public async Task<IActionResult> GetExceptions()
+        [HttpGet("exception/common")]
+        public async Task<IActionResult> GetExceptionFromCommon()
         {
             var factory = new ServiceProxyFactory();
-            var proxy = factory.CreateServiceProxy<IStateless1>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
+            var proxy = factory.CreateServiceProxy<IStatelessInCommon>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
 
             try
             {
-                await proxy.HelloExceptions();
+                await proxy.HelloExceptionFromCommon();
+            }
+            catch (AggregateException aex)
+            {
+                Console.WriteLine(aex.Message);
+            }
+
+            return Ok();
+        }
+
+        [HttpGet("exception/svc")]
+        public async Task<IActionResult> GetExceptionFromSvc()
+        {
+            var factory = new ServiceProxyFactory();
+            var proxy = factory.CreateServiceProxy<IStatelessInSvc>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
+
+            try
+            {
+                await proxy.HelloExceptionFromSvc();
             }
             catch (AggregateException aex)
             {

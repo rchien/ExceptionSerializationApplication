@@ -16,7 +16,7 @@ namespace Stateless1
     /// <summary>
     /// An instance of this class is created for each service instance by the Service Fabric runtime.
     /// </summary>
-    internal sealed class Stateless1 : StatelessService, IStateless1
+    internal sealed class Stateless1 : StatelessService, IStatelessInCommon, IStatelessInSvc
     {
         public Stateless1(StatelessServiceContext context)
             : base(context)
@@ -27,7 +27,7 @@ namespace Stateless1
             return this.CreateServiceRemotingInstanceListeners();
         }
 
-        public Task HelloExceptions()
+        public Task HelloException()
         {
             var rand = new Random();
             switch (rand.Next() % 3)
@@ -44,6 +44,16 @@ namespace Stateless1
             }
 
             return Task.CompletedTask;
+        }
+
+        public async Task HelloExceptionFromCommon()
+        {
+            await HelloException();
+        }
+
+        public async Task HelloExceptionFromSvc()
+        {
+            await HelloException();
         }
     }
 

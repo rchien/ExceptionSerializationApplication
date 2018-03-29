@@ -18,15 +18,15 @@ namespace Web1.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [HttpGet("exception/common")]
-        public async Task<IActionResult> GetExceptionFromCommon()
+        [HttpGet("exception")]
+        public async Task<IActionResult> GetException()
         {
             var factory = new ServiceProxyFactory();
-            var proxy = factory.CreateServiceProxy<IStatelessInCommon>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
+            var proxy = factory.CreateServiceProxy<IStateless>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
 
             try
             {
-                await proxy.HelloExceptionFromCommon();
+                await proxy.HelloException();
             }
             catch (AggregateException aex)
             {
@@ -36,15 +36,15 @@ namespace Web1.Controllers
             return Ok();
         }
 
-        [HttpGet("exception/svc")]
-        public async Task<IActionResult> GetExceptionFromSvc()
+        [HttpGet("nullreferenceexception")]
+        public async Task<IActionResult> GetNullReferenceException()
         {
             var factory = new ServiceProxyFactory();
-            var proxy = factory.CreateServiceProxy<IStatelessInSvc>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
+            var proxy = factory.CreateServiceProxy<IStateless>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
 
             try
             {
-                await proxy.HelloExceptionFromSvc();
+                await proxy.HelloException();
             }
             catch (AggregateException aex)
             {

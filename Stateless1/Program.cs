@@ -22,9 +22,9 @@ namespace Stateless1
                 // an instance of the class is created in this host process.
 
                 ServiceRuntime.RegisterServiceAsync("Stateless1Type",
-                    context => new Stateless1(context)).GetAwaiter().GetResult();
+                    context => new Stateless(context)).GetAwaiter().GetResult();
 
-                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Stateless1).Name);
+                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Stateless).Name);
 
                 // Prevents this host process from terminating so services keep running.
                 Thread.Sleep(Timeout.Infinite);

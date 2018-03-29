@@ -29,7 +29,7 @@ namespace Stateless1
 
         public Task HelloException()
         {
-            throw new NullReferenceException();
+            throw new Exception();
         }
 
         public Task HelloNullReferenceException()

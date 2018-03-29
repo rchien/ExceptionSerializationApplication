@@ -11,6 +11,8 @@ namespace Web1.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private const string NO_EXCEPTION = "No Exception Thrown";
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,16 +26,17 @@ namespace Web1.Controllers
             var factory = new ServiceProxyFactory();
             var proxy = factory.CreateServiceProxy<IStateless>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
 
+            var str = NO_EXCEPTION;
             try
             {
                 await proxy.HelloException();
             }
             catch (AggregateException aex)
             {
-                Console.WriteLine(aex.Message);
+                str = aex.Message;
             }
 
-            return Ok();
+            return Ok(str);
         }
 
         [HttpGet("nullreferenceexception")]
@@ -42,16 +45,17 @@ namespace Web1.Controllers
             var factory = new ServiceProxyFactory();
             var proxy = factory.CreateServiceProxy<IStateless>(new Uri("fabric:/ExceptionSerializationApplication/Stateless1"));
 
+            var str = NO_EXCEPTION;
             try
             {
-                await proxy.HelloException();
+                await proxy.HelloNullReferenceException();
             }
             catch (AggregateException aex)
             {
-                Console.WriteLine(aex.Message);
+                str = aex.Message;
             }
 
-            return Ok();
+            return Ok(str);
         }
 
         // GET api/values/5
